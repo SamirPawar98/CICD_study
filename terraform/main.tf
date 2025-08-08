@@ -9,6 +9,7 @@ provider "aws" {
 resource "aws_glue_job" "transform_job" {
   name     = "lottery-transform-job"                   # Glue job name
   role_arn = var.iam_role                              # IAM role ARN
+  description = "ETL job to transform lottery data"
 
   # Job command and script settings
   command {
@@ -18,10 +19,12 @@ resource "aws_glue_job" "transform_job" {
   }
 
   default_arguments = {
-    "--TempDir"               = "s3://jay-patil-temp-bucket/glue-temp/"
-    "--job-bookmark-option"   = "job-bookmark-disable"
-    "--enable-metrics"        = "true"
-    "--enable-continuous-cloudwatch-log" = "true"
+    "--TempDir"                               = "s3://aws-glue-assets-635523823440-us-east-1/temporary/"
+    "--job-bookmark-option"                   = "job-bookmark-disable"
+    "--enable-metrics"                        = "true"
+    "--enable-continuous-cloudwatch-log"      = "true"
+    "--enable-spark-ui"                       = "true"
+    "--spark-event-logs-path"                 = "s3://aws-glue-assets-635523823440-us-east-1/sparkHistoryLogs/"
   }
 
   # Retry and timeout configurations
@@ -33,11 +36,9 @@ resource "aws_glue_job" "transform_job" {
   number_of_workers = 2                                # Number of DPUs
   worker_type       = "G.1X"                           # Worker type (G.1X or G.2X)
 
-  # Optional: Job description
-  description = "ETL job to transform lottery data"
-
   
 }
+
 
 ###############################################
 # AWS Glue Crawler for Transformed Data
