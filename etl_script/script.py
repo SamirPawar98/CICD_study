@@ -22,7 +22,7 @@ job.init(args['JOB_NAME'], args)
 # Step 1: Read from AWS Glue Data Catalog
 df = glueContext.create_dynamic_frame.from_catalog(
     database="test_db",
-    table_name="part_00000_f4ecfb09_7078_46bc_a277_c37f5e02741e_c000_csv",
+    table_name="lottery_sales",
     transformation_ctx="datasource"
 ).toDF()
 
@@ -161,7 +161,7 @@ df = df.drop(*columns_to_drop)
 
 
 # Step 11: Write to S3
-output_path = "s3://final-transformedbucket/masterdata2/"
+output_path = "s3://jay-patil-transformed-bucket/transformed_data/"
 df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_path)
 
 # Step 12: Commit job
