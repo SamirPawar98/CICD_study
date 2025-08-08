@@ -26,7 +26,6 @@ df = glueContext.create_dynamic_frame.from_catalog(
     transformation_ctx="datasource"
 ).toDF()
 
-# test
 
 print(f"Initial record count: {df.count()}")
 df.show(5)
