@@ -18,7 +18,7 @@ resource "aws_glue_job" "transform_job" {
   }
 
   default_arguments = {
-    "--TempDir"               = "s3://my-temp-bucket/glue-temp/"
+    "--TempDir"               = "s3://jay-patil-temp-bucket/glue-temp/"
     "--job-bookmark-option"   = "job-bookmark-disable"
     "--enable-metrics"        = "true"
     "--enable-continuous-cloudwatch-log" = "true"
